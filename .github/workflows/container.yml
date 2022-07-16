@@ -10,7 +10,7 @@ on:
 defaults:
   run:
     working-directory: packages/container
-jubs:
+jobs:
   build:
     runs-on: ubuntu-latest
     steps:
