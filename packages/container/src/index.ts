@@ -1,2 +1,4 @@
+// test2
 import('./bootstrap');
-export {};
+export { };
+
