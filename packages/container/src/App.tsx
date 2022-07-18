@@ -1,9 +1,14 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import MarketingApp from './components/MarketingApp';
+import Header from './components/Header';
 export default () => {
-	return <div>
-		<h1>Hi therre!</h1>
-		<hr />
-		<MarketingApp />
-	</div>;
+	return (
+		<BrowserRouter>
+			<div>
+				<Header signedIn={9} onSignOut={() => { }} />
+				<MarketingApp />
+			</div>
+		</BrowserRouter>
+	);
 };
