@@ -1,27 +1,30 @@
-const path = require('path');
 const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+const path = require('path');
 const commonConfig = require('./webpack.common');
 const packageJson = require('../package.json');
 const devConfig = {
 	mode: 'development',
 	output: {
-		publicPath: 'http://localhost:8081/',
 		filename: 'bundle.js',
-		path: path.resolve(__dirname, 'dist'),
-
+		path: path.resolve(__dirname, '../', 'dist'),
+		publicPath: 'http://localhost:8083/'
 	},
 	devServer: {
-		port: 8081,
+		port: 8083,
 		historyApiFallback: true,
+		writeToDisk: true,
+		headers: {
+			'Access-Control-Allow-Origin': '*'
+		}
 	},
 	plugins: [
 		new ModuleFederationPlugin({
-			name: 'marketing',
+			name: 'dashboard',
 			filename: 'remoteEntry.js',
 			exposes: {
-				'./MarketingApp': './src/bootstrap'
+				'./DashboardApp': './src/bootstrap'
 			},
 			shared: packageJson.dependencies
 		}),
