@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { createMemoryHistory, Location, createBrowserHistory, History } from 'history';
 // Mount function to start up the app
-console.log("in bootstrap")
 const mount = (el: Element, { onSignIn, onNavigate, defaultHistory, initialPath }:
 	{ onSignIn?: () => void, onNavigate?: () => void, defaultHistory?: History<unknown>, initialPath?: string }) => {
 	const history = defaultHistory || createMemoryHistory({
@@ -17,7 +16,7 @@ const mount = (el: Element, { onSignIn, onNavigate, defaultHistory, initialPath 
 	return {
 		onParentNavigate: (location: Location) => {
 			const { pathname: nextPathName } = location;
-			console.log(`nextPathName: ${nextPathName} el: ${(el)}`)
+
 			const { pathname } = history.location;
 			pathname !== nextPathName
 				&& (

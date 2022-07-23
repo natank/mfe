@@ -52,7 +52,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn({ onSignIn }) {
   const classes = useStyles();
-  console.log(`Auth rednering sign in`)
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
