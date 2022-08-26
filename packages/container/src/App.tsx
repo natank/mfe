@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useState, useEffect } from 'react';
-import { BrowserRouter, Route, Switch, Router, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useNavigate, Navigate } from 'react-router-dom';
 
 import { StylesProvider, createGenerateClassName } from '@material-ui/core/styles';
 import { createBrowserHistory } from 'history';
@@ -25,21 +25,18 @@ export default () => {
 		}
 	}, [isSignedIn])
 	return (
-		<Router history={history}>
+		<Router>
 			<StylesProvider generateClassName={generateClassName}>
 				<div>
 					<Header {...{ isSignedIn }} onSignOut={() => { setIsSignedIn(false) }} />
 					<Suspense fallback={<Progress />}>
-						<Switch>
-							<Route path="/auth">
-								<AuthLazy onSignIn={() => setIsSignedIn(true)} />
+						<Routes>
+							<Route path="/auth" element={<AuthLazy onSignIn={() => setIsSignedIn(true)} />} />
+							<Route path="/dashboard" element = {!isSignedIn && <Navigate to='/' />}>
+								<Route index element={<DashboardLazy />} />
 							</Route>
-							<Route path="/dashboard">
-								{!isSignedIn && <Redirect to='/' />}
-								<DashboardLazy />
-							</Route>
-							<Route path="/" component={MarketingLazy} />
-						</Switch>
+							<Route path="/*" element={<MarketingLazy />} />
+						</Routes>
 					</Suspense>
 				</div>
 			</StylesProvider>

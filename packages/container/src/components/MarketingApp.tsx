@@ -1,22 +1,24 @@
 import React, { useRef, useEffect } from 'react';
 // @ts-ignore
 import mount from 'marketing/MarketingApp';
-import { useHistory } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom';
 export default () => {
     const ref = useRef(null);
-    const history = useHistory();
+    let location = useLocation();
+    let { pathname } = location;
+    let navigate = useNavigate();
     useEffect(() => {
-        const { onParentNavigate } = mount(ref.current, {
-            initialPath: history.location.pathname,
+         const onParentNavigate = mount(ref.current, {
+            initialPath: location.pathname,
             onNavigate: ({ pathname: nextPathName }: { pathname: string }) => {
-                const { pathname } = history.location;
+                const { pathname } = location;
                 pathname !== nextPathName &&
                     (
-                        history.push(nextPathName)
+                        navigate(nextPathName)
                     );
             }
         });
-        history.listen(onParentNavigate);
-    }, []);
+        onParentNavigate({pathname: location.pathname})
+    }, [pathname]);
     return <div ref={ref} />;
 }

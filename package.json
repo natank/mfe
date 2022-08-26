@@ -1,0 +1,17 @@
+{
+    "private": true,
+    "name": "mfe",
+    "workspaces": [
+        "packages/*"
+    ],
+    "scripts": {
+        "auth": "yarn workspace auth start",
+        "dashboard": "yarn workspace dashboard start",
+        "marketing": "yarn workspace marketing start",
+        "container": "yarn workspace container start",
+        "start": "concurrently --kill-others-on-fail \"yarn auth\" \"yarn dashboard\" \"yarn marketing\" \"yarn container\""
+    },
+    "devDependencies": {
+        "concurrently": "^7.3.0"
+    }
+}

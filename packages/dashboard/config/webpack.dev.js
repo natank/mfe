@@ -14,7 +14,6 @@ const devConfig = {
 	devServer: {
 		port: 8083,
 		historyApiFallback: true,
-		writeToDisk: true,
 		headers: {
 			'Access-Control-Allow-Origin': '*'
 		}

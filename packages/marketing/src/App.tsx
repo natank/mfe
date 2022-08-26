@@ -1,7 +1,6 @@
-import React from 'react';
-import { Switch, Route, Router } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { StylesProvider, createGenerateClassName } from '@material-ui/core/styles';
-import { History } from 'history';
 import Landing from './components/Landing';
 import Pricing from './components/Pricing';
 
@@ -9,16 +8,23 @@ const generateClassName = createGenerateClassName({
 	productionPrefix: 'ma'
 })
 
-export default ({ history }: { history: History }) => {
+export default ({ onNavigate , initialPath}: { initialPath: string, onNavigate?: ({ pathname }: { pathname: string })=> void }) => {
+	const location = useLocation()
+	const {pathname} = location;
+	const navigate = useNavigate();
+	useEffect(()=>{
+		onNavigate && onNavigate({pathname: location.pathname}) 
+	},[pathname])
+	useEffect(() => {
+		navigate(initialPath)
+	}, [initialPath])
 	return (
 		<div>
 			<StylesProvider generateClassName={generateClassName}>
-				<Router history={history}>
-					<Switch>
-						<Route exact path='/pricing' component={Pricing} />
-						<Route path='/' component={Landing} />
-					</Switch>
-				</Router>
+				<Routes>
+					<Route path='/pricing' element={<Pricing />} />
+					<Route path='/' element={<Landing />} />
+				</Routes>
 			</StylesProvider>
 		</div>
 	);
